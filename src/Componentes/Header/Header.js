@@ -9,11 +9,12 @@ function Header() {
   return (
     <header>
       <div class="clicavel" onClick={CardClicavel}>
-        <h2>Smart Parking</h2>
+        <h2>Marcos Henrique C.</h2>
       </div>
 
       <div className="menu">
-        <Link to="/">Contate-me</Link>
+        <Link to="/">asdasd</Link>
+        {/* <Link to="/contato">Contate-me</Link> */}
         <Link to="/">AAAA</Link>
         <Link to="/teste">Teste</Link>
         {/* <Link to="/relatorios">Relatórios</Link> */}

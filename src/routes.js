@@ -4,6 +4,7 @@ import Erro from "./Componentes/Erro/Erro";
 import Header from "./Componentes/Header/Header";
 import Home from "./Componentes/Home/Home";
 
+// import Contato from "./Contato";
 import Teste from "./Teste";
 
 function RoutesApp() {
@@ -14,6 +15,7 @@ function RoutesApp() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/teste" element={<Teste />} />
+        {/* <Route path="/contato" element={<Contato />} /> */}
 
         <Route path="*" errorElement={<Erro />} />
       </Routes>
