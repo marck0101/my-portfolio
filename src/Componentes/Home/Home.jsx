@@ -1,66 +1,52 @@
-// import React, { useEffect, useState } from 'react';
 import React from "react";
 import { Card, Grid } from "@mui/material";
 
 export default function Home() {
-  const testeA = [
-    { id: 1, texto: "a", country: "Austria" },
-    { id: 2, texto: "b", country: "Belgium" },
-    { id: 3, texto: "c", country: "Canada" },
-    { id: 4, texto: "d", country: "Denmark" },
-    { id: 5, texto: "e", country: "Egypt" },
-    { id: 6, texto: "f", country: "Austria" },
-    { id: 7, texto: "g", country: "Belgium" },
-    { id: 8, texto: "h", country: "Canada" },
-    { id: 9, texto: "i", country: "Denmark" },
-    { id: 10, texto: "j", country: "Egypt" },
+  const listCard = [
+    { id: 1, texto: "Em desencolvimento!!", country: "Austria" },
+    { id: 2, texto: "Em desencolvimento!!", country: "Belgium" },
+    { id: 3, texto: "Em desencolvimento!!", country: "Canada" },
+    { id: 4, texto: "Em desencolvimento!!", country: "Denmark" },
+    { id: 5, texto: "Em desencolvimento!!", country: "Egypt" },
+    { id: 6, texto: "Em desencolvimento!!", country: "Austria" },
+    { id: 7, texto: "Em desencolvimento!!", country: "Belgium" },
+    { id: 8, texto: "Em desencolvimento!!", country: "Canada" },
+    { id: 9, texto: "Em desencolvimento!!", country: "Denmark" },
+    { id: 10, texto: "Em desencolvimento!!", country: "Egypt" },
     // { id: 11, texto: "j", country: "Egypt" },
   ];
 
-  // const [numbers, setNumbers] =useState ();
+  const estiloContainer = {
+    marginTop: 25,
+    // padding: 20,
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    textAlign: "center",
+  };
+
+  const estilo = {
+    backgroundColor: "blue",
+    color: "yellow",
+    // alignText: "center",
+    height: 100,
+    margin: 20,
+    // width: 100,
+
+  };
+
   // console.log(testeA.length);
   return (
     <>
-      <Grid container style={{ padding: 50 }}>
-        <Grid
-          item
-          xs={12}
-          lg={12}
-          style={{ display: "flex" /*, flexWrap: "wrap"*/ }}
-        >
-          {testeA.map((item) => {
+      <Grid container spacing={2}>
+        <Grid item xs={12} lg={12} style={estiloContainer}>
+          {listCard.map((item) => {
             return (
               <>
-                <Grid container>
-                  <Grid
-                    item
-                    xs={12}
-                    lg={12}
-                    style={{ width: "100%", height: 80 }}
-                  >
-                    {testeA.length <= 10 ? (
-                      <Card>
-                        <Grid container spacing={2}>
-                          <Grid
-                            item
-                            xs={12}
-                            lg={12}
-                            key={item.id}
-                            style={{
-                              textAlign: "center",
-                              marginTop: 30,
-                            }}
-                          >
-                            {item.texto}
-                          </Grid>
-                        </Grid>
-                      </Card>
-                    ) : (
-                      <>
-                        <h5>erro no tamanho</h5>
-                      </>
-                    )}
-                  </Grid>
+                <Grid xs={6} lg={3}>
+                  <Card key={item.id} style={estilo}>
+                    {item.texto}
+                  </Card>
                 </Grid>
               </>
             );
