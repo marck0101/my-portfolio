@@ -13,9 +13,8 @@ function Header() {
       </div>
 
       <div className="menu">
-        <Link to="/">asdasd</Link>
-        {/* <Link to="/contato">Contate-me</Link> */}
-        <Link to="/">AAAA</Link>
+        <Link to="/">Home</Link>
+        <Link to="/contato">Contate-me</Link>
         <Link to="/teste">Teste</Link>
         {/* <Link to="/relatorios">Relatórios</Link> */}
       </div>
