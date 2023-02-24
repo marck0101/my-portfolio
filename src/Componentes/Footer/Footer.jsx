@@ -5,7 +5,12 @@ import "./style.css";
 export default function Footer() {
   const estilo = {
     justifyContent: "center",
+    // marginBotton: 10,
   };
+
+  function enviar() {
+    alert("AAA");
+  }
   return (
     <footer>
       <div>
@@ -24,7 +29,9 @@ export default function Footer() {
               style={{ width: 420, height: 70 }}
             />
           </Grid>
-          <Button variant="enviar">Enviar</Button>
+          <Button variant="enviar" onClick={() => enviar()}>
+            Enviar
+          </Button>
         </Grid>
       </div>
     </footer>

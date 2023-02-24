@@ -8,11 +8,11 @@ function Header() {
   }
   return (
     <header>
-      <div class="clicavel" onClick={CardClicavel}>
+      <div onClick={CardClicavel} style={{ cursor: "pointer" }}>
         <h2>Marcos Henrique C.</h2>
       </div>
 
-      <div className="menu">
+      <div>
         <Link to="/">Home</Link>
         <Link to="/contato">Contate-me</Link>
         <Link to="/teste">Teste</Link>
