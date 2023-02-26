@@ -1,11 +1,15 @@
 import React from "react";
-import S2Aula7 from "./Secao2/S2Aula7";
 
 export default function Teste() {
+  const estilo = {
+    margin: "auto",
+    padding: 40,
+    /* backgroundColor: "red",*/
+  };
   return (
     <>
-      <div>
-        <S2Aula7 />
+      <div style={estilo}>
+        <h5>aaaaaa</h5>
       </div>
     </>
   );
