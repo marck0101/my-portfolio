@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Button, Grid, TextField } from "@mui/material";
 import { v4 } from "uuid";
 import { AiOutlineDelete } from "react-icons/ai";
+import { BiEditAlt } from "react-icons/bi";
 
 export default function DocTeste() {
   const [lista, setLista] = useState([]);
@@ -44,12 +45,31 @@ export default function DocTeste() {
   }
 
   function handleDeleteItem(indice) {
-    const newLista = lista;
-    newLista.splice(indice, 1);
-    setLista(newLista);
+    const newListaRemove = lista;
+    newListaRemove.splice(indice, 1);
+    setLista(newListaRemove);
     localStorage.setItem("lista", JSON.stringify(lista));
     localStorage.getItem("lista");
     atualizar();
+  }
+
+  function handleEditItem(item, indice) {
+    const newListaEdit = lista;
+    let editItem = indice;
+    const newItem = prompt("novo item");
+
+    if ((newItem !== "" && newItem !== null) && editItem !== -1) {
+      newListaEdit[editItem] = newItem;
+      // newListaEdit.push(newItem);
+
+      setLista(newListaEdit);
+      localStorage.setItem("lista", JSON.stringify(lista));
+      localStorage.getItem("lista");
+      atualizar();
+    } else {
+      alert("informe o valor que vai substitui-lo");
+    }
+    console.log("lista", lista);
   }
 
   return (
@@ -103,9 +123,14 @@ export default function DocTeste() {
                     {/* <li key={item}>{item}</li> */}
                     <li key={v4()}>
                       {item}
+                      {/* <div> */}
                       <Button onClick={() => handleDeleteItem(indice)}>
                         <AiOutlineDelete size={25} />
                       </Button>
+                      <Button onClick={() => handleEditItem(item, indice)}>
+                        <BiEditAlt size={25} />
+                      </Button>
+                      {/* </div> */}
                     </li>
                   </ul>
                 </div>
