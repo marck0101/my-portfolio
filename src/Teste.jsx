@@ -15,7 +15,7 @@ export default function Teste() {
         <Grid container spacing={2}>
           <Grid item>
             <DocTeste />
-            <h5>--------------</h5>
+            {/* <h5>--------------</h5>
             <strong>Melhorias:</strong>
             <p>Poder deletar item a item</p>
             <p>Com checkbox colocar em cada item</p>
@@ -23,7 +23,7 @@ export default function Teste() {
             <p>
               quando na lista de concluidos clicar para não checked volta para
               lista original
-            </p>
+            </p> */}
             {/* <ExemploUdemy /> */}
           </Grid>
         </Grid>
