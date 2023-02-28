@@ -1,17 +1,11 @@
-
-import { Link } from 'react-router-dom';
-import './style.css';
+import './header.css';
+import { Link } from 'react-router-dom'
 
 function Header(){
   return(
     <header>
-      <h2>Sujeito Dev</h2>
-
-      <div className="menu">
-        <Link to="/">Home</Link>
-        <Link to="/sobre">Sobre</Link>
-        <Link to="/contato">Contato</Link>
-      </div>
+      <Link className="logo" to="/">Prime Flix</Link>
+      <Link className="favoritos" to="/favoritos">Meus filmes</Link>
     </header>
   )
 }
