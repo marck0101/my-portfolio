@@ -1,17 +1,21 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ListaDeCompras from "./components/ListaDeCompras";
-import ReqHTTP from "./Secoes/Secao7/S7Aula53";
-import Teste from "./Teste";
 
-function RoutesApp() {
-  return (
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import Home from './pages/Home';
+import Sobre from './pages/Sobre';
+import Contato from './pages/Contato';
+
+
+function RoutesApp(){
+  return(
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Teste />} />
-        <Route path="/listaCompras" element={<ListaDeCompras />} />
-        <Route path="/nutri" element={<ReqHTTP />} />
+        <Route path="/" element={ <Home/> } />
+        <Route path="/sobre" element={ <Sobre/> } />
+        <Route path="/contato" element={ <Contato/> } />
       </Routes>
     </BrowserRouter>
-  );
+  )
 }
+
 export default RoutesApp;
