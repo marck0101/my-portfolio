@@ -1,7 +1,5 @@
 import React from "react";
-import { Grid } from "@mui/material";
-import DocTeste from "./DocTeste";
-// import ExemploUdemy from "./ExemploUdemy";
+import { Button, Grid } from "@mui/material";
 
 export default function Teste() {
   const estilo = {
@@ -9,22 +7,19 @@ export default function Teste() {
     padding: 40,
     /* backgroundColor: "red",*/
   };
+  function pagNutri() {
+    window.location.href = "http://localhost:3000/nutri";
+  }
+  function pagList() {
+    window.location.href = "http://localhost:3000/listaCompras";
+  }
   return (
     <>
       <div style={estilo}>
         <Grid container spacing={2}>
           <Grid item>
-            <DocTeste />
-            {/* <h5>--------------</h5>
-            <strong>Melhorias:</strong>
-            <p>Poder deletar item a item</p>
-            <p>Com checkbox colocar em cada item</p>
-            <p>quando checked mudam para listas de concluidos</p>
-            <p>
-              quando na lista de concluidos clicar para não checked volta para
-              lista original
-            </p> */}
-            {/* <ExemploUdemy /> */}
+            <Button onClick={() => pagNutri()}>Acessar pag nutri</Button>
+            <Button onClick={() => pagList()}>Acessar pag lista</Button>
           </Grid>
         </Grid>
       </div>
