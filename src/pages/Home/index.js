@@ -12,8 +12,8 @@ function Home() {
   useEffect(() => {
     async function loadFilmes() {
       //                              o movie/now_playing é a rota de get do site https://developers.themoviedb.org/3/movies/get-now-playing que é de filmes em cartaz
-      // const response = await api.get("/movie/upcoming", {
-      const response = await api.get("movie/now_playing", {
+      const response = await api.get("/movie/upcoming", {
+      // const response = await api.get("movie/now_playing", {
         params: {
           // atualizei a key para pegar com a minha conta
           api_key: "cc11476b835ab07d6e712d9d4d7ae788",
@@ -21,15 +21,9 @@ function Home() {
           page: 1,
         },
       });
-      // console.log("response", response);
-      //console.log(response.data.results.slice(0, 10));
-      // console.log('AQUI=>',response.data.results)
       setFilmes(response.data.results.slice(0, 10));
       setLoading(false);
 
-      // console.log("response.data.results", response.data.results);
-      // console.log("response.data", response.data);
-      // console.log("response", response);
     }
 
     loadFilmes();

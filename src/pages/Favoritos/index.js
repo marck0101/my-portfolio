@@ -15,8 +15,8 @@ function Favoritos(){
 
 
   function excluirFilme(id){
-    let filtroFilmes = filmes.filter( (item) => {
-      return (item.id !== id)
+    let filtroFilmes = filmes.filter( (item) => { // filter vai devolver todos os itens que passar na nossa condição
+      return (item.id !== id) // vou devolver todos o itens, exeto o que eu passei o id
     })
 
     setFilmes(filtroFilmes);
@@ -28,7 +28,7 @@ function Favoritos(){
     <div className="meus-filmes">
       <h1>Meus filmes</h1>
 
-      {filmes.length === 0 && <span>Você não possui nenhum filme salvo :( </span>}
+      {filmes.length === 0 && <span>Você não possui nenhum filme salvo :( </span>} {/*Validando que na lista de filmes não há nada a ser mostrado*/}
 
       <ul>
         {filmes.map((item) => {
