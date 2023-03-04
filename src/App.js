@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { db } from "./firebaseConnection"; // importação com o banco
+import { useEffect, useState } from "react";
+import { db, auth } from "./firebaseConnection"; // importação com o banco
 import "./app.css";
 import {
   doc,
@@ -10,7 +10,9 @@ import {
   getDocs,
   updateDoc,
   deleteDoc,
+  onSnapshot, // para usar o banaco em realTime
 } from "firebase/firestore"; // para cadastrar um item novo
+import { createUserWithEmailAndPassword } from "firebase/auth"; // para criar um usuario com email e senha
 import { async } from "@firebase/util";
 
 function App() {
@@ -18,6 +20,25 @@ function App() {
   const [autor, setAutor] = useState("");
   const [posts, setPosts] = useState([]);
   const [idPost, setIdPost] = useState([]);
+  const [email, seteMail] = useState([]);
+  const [senha, setSenha] = useState([]);
+
+  useEffect(() => {
+    async function loadPosts() {
+      const unsub = onSnapshot(collection(db, "posts"), (snapshoot) => {
+        let listaPost = [];
+        snapshoot.forEach((doc) => {
+          listaPost.push({
+            id: doc.id,
+            titulo: doc.data().titulo,
+            autor: doc.data().autor,
+          });
+        });
+        setPosts(listaPost);
+      });
+    }
+    loadPosts();
+  }, []);
 
   async function heandleAdd() {
     // await setDoc(doc(db, "posts", "12345"), { // gerando id manualmente
@@ -105,11 +126,41 @@ function App() {
         alert(erro);
       });
   }
+  async function novoUsuario() {
+    await createUserWithEmailAndPassword(auth, email, senha)
+      .then(() => {
+        alert("cadastrado com sucesso");
+      })
+      .catch((erro) => {
+        alert(erro);
+      });
+  }
 
   return (
     <div>
       <h1> react + firebase</h1>
       <div className="container">
+        <span>Email</span>
+        <input
+          value={email}
+          onChange={(e) => seteMail(e.target.value)}
+          placeholder="informe seu email"
+        />
+        <span>Senha</span>
+        <input
+          value={senha}
+          onChange={(e) => setSenha(e.target.value)}
+          placeholder="informe a sua senha"
+        />
+        <br />
+        <button onClick={() => novoUsuario()}>Novo usuário</button>
+      </div>
+      <br />
+      <hr />
+      <br />
+
+      <div className="container">
+        <h2>POSTS</h2>
         <label>Informe o ID</label>
         <input
           value={idPost}
