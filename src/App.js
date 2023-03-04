@@ -12,7 +12,11 @@ import {
   deleteDoc,
   onSnapshot, // para usar o banaco em realTime
 } from "firebase/firestore"; // para cadastrar um item novo
-import { createUserWithEmailAndPassword } from "firebase/auth"; // para criar um usuario com email e senha
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth"; // para criar um usuario com email e senha
 import { async } from "@firebase/util";
 
 function App() {
@@ -20,8 +24,10 @@ function App() {
   const [autor, setAutor] = useState("");
   const [posts, setPosts] = useState([]);
   const [idPost, setIdPost] = useState([]);
-  const [email, seteMail] = useState([]);
+  const [email, setEmail] = useState([]);
   const [senha, setSenha] = useState([]);
+  const [user, setUser] = useState(false); // por que não vai comecar logado
+  const [userDetail, setUserDetail] = useState({}); // Obj vazio que não vai estar logado
 
   useEffect(() => {
     async function loadPosts() {
@@ -130,20 +136,72 @@ function App() {
     await createUserWithEmailAndPassword(auth, email, senha)
       .then(() => {
         alert("cadastrado com sucesso");
+        setEmail("");
+        setSenha("");
       })
-      .catch((erro) => {
-        alert(erro);
+      .catch((error) => {
+        if (error.code === "auth/weak-password") {
+          alert("Senha muito fraca");
+        } else if (error.code === "auth/email-already-in-use") {
+          alert("email já cadastrado");
+        }
+        alert("erro ao cadastrar");
+      });
+  }
+  async function logarUsuario() {
+    await signInWithEmailAndPassword(auth, email, senha)
+      .then((value) => {
+        alert("logado com sucesso");
+        console.log("value.user", value.user);
+
+        setUserDetail({
+          uid: value.user.uid,
+          email: value.user.email,
+        }); // pegar informações do usuário logado
+
+        setUser(true); // true por que agora vai estar logado
+
+        setEmail("");
+        setSenha("");
+      })
+      .catch(() => {
+        alert("error");
+      });
+  }
+  async function fazerLogout() {
+    await signOut(auth) // não precisa de user e senha para sair
+      .then(() => {
+        alert("deslogado com sucesso!");
+        setUserDetail({});
+        setUser(false);
+      })
+      .catch(() => {
+        alert("erro ao deslogar");
       });
   }
 
   return (
     <div>
       <h1> react + firebase</h1>
+
+      {user && (
+        <div>
+          <strong>Seja bem vindo(a)!! (Você está logado!)</strong><br/>
+          <span>
+            ID: {userDetail.uid} - Email: {userDetail.email}
+          </span>
+          <br />
+          <button onClick={() => fazerLogout()}>Sair da conta</button>
+          <br />
+          <br />
+        </div>
+      )}
+
       <div className="container">
         <span>Email</span>
         <input
           value={email}
-          onChange={(e) => seteMail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           placeholder="informe seu email"
         />
         <span>Senha</span>
@@ -154,55 +212,57 @@ function App() {
         />
         <br />
         <button onClick={() => novoUsuario()}>Novo usuário</button>
+        <button onClick={() => logarUsuario()}>Fazer login</button>
       </div>
       <br />
       <hr />
       <br />
-
-      <div className="container">
-        <h2>POSTS</h2>
-        <label>Informe o ID</label>
-        <input
-          value={idPost}
-          onChange={(e) => setIdPost(e.target.value)}
-          placeholder="Digite o id do post"
-        />{" "}
-        <br />
-        <label>Titulo:</label>
-        <textarea
-          value={titulo}
-          onChange={(e) => setTitulo(e.target.value)}
-          type="text"
-          placeholder="Digite o texto"
-        />
-        <label>Autor</label>
-        <input
-          value={autor}
-          onChange={(e) => setAutor(e.target.value)}
-          type="text"
-          placeholder="autor do post"
-        />
-        <button onClick={() => heandleAdd()}>cadastrar</button>
-        <button onClick={() => buscarPost()}>Buscar Post</button> <br />
-        <button onClick={() => editPost()}>Atualizar Post</button>
-        {posts.map((post) => {
-          return (
-            <ul>
-              <li key={post.id}>
-                <strong>ID: {post.id}</strong> <br />
-                <span>Titulo: {post.titulo}</span>
-                <br />
-                <span>Autor: {post.autor}</span>
-                <br />
-                <button onClick={() => deletePost(post.id)}>
-                  Excluir Post
-                </button>
-                <br />
-              </li>
-            </ul>
-          );
-        })}
-      </div>
+      {user && (
+        <div className="container">
+          <h2>POSTS</h2>
+          <label>Informe o ID</label>
+          <input
+            value={idPost}
+            onChange={(e) => setIdPost(e.target.value)}
+            placeholder="Digite o id do post"
+          />{" "}
+          <br />
+          <label>Titulo:</label>
+          <textarea
+            value={titulo}
+            onChange={(e) => setTitulo(e.target.value)}
+            type="text"
+            placeholder="Digite o texto"
+          />
+          <label>Autor</label>
+          <input
+            value={autor}
+            onChange={(e) => setAutor(e.target.value)}
+            type="text"
+            placeholder="autor do post"
+          />
+          <button onClick={() => heandleAdd()}>cadastrar</button>
+          <button onClick={() => buscarPost()}>Buscar Post</button> <br />
+          <button onClick={() => editPost()}>Atualizar Post</button>
+          {posts.map((post) => {
+            return (
+              <ul>
+                <li key={post.id}>
+                  <strong>ID: {post.id}</strong> <br />
+                  <span>Titulo: {post.titulo}</span>
+                  <br />
+                  <span>Autor: {post.autor}</span>
+                  <br />
+                  <button onClick={() => deletePost(post.id)}>
+                    Excluir Post
+                  </button>
+                  <br />
+                </li>
+              </ul>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
