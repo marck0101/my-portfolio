@@ -1,21 +1,21 @@
-import { initializeApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
-import { getAuth } from 'firebase/auth'
-
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore"; // pra  poder ter conexão com o banco
+import { getAuth } from "firebase/auth"; // para trabalhar  com autenticação
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBx9WFTQC2XIi-4xE1adOMQYaxEEeshZFg",
-  authDomain: "cursoapp-f0398.firebaseapp.com",
-  projectId: "cursoapp-f0398",
-  storageBucket: "cursoapp-f0398.appspot.com",
-  messagingSenderId: "394026650841",
-  appId: "1:394026650841:web:2072c9f66868dfd41ac2c8",
-  measurementId: "G-JST0NMT5EC"
+  apiKey: "AIzaSyB4NIPpFGZDctwDjdi6ajTvW1t4z8HFXZQ",
+  authDomain: "curso-35ef6.firebaseapp.com",
+  projectId: "curso-35ef6",
+  storageBucket: "curso-35ef6.appspot.com",
+  messagingSenderId: "368683986860",
+  appId: "1:368683986860:web:4a88a8b79b86848d0e9409",
+  measurementId: "G-RG7RKTBDEM",
 };
 
+// inicializou o firebase
 const firebaseApp = initializeApp(firebaseConfig);
-
+// inicializando as  configurações
 const db = getFirestore(firebaseApp);
-const auth = getAuth(firebaseApp)
+const auth = getAuth(firebaseApp);
 
-export { db, auth };
+export { db, auth }; // pra poder consumir os dados do firebase
