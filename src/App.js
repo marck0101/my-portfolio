@@ -16,6 +16,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } from "firebase/auth"; // para criar um usuario com email e senha
 import { async } from "@firebase/util";
 
@@ -44,6 +45,28 @@ function App() {
       });
     }
     loadPosts();
+  }, []);
+
+  useEffect(() => {
+    async function checkLogin() {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // se tem usuario logado
+          console.log(user);
+          setUser(true);
+          setUserDetail({
+            uid: user.uid,
+            email: user.email,
+          });
+        } else {
+          // não tem usuário logado
+          setUser(false);
+          setUserDetail({});
+        }
+      });
+    }
+
+    checkLogin();
   }, []);
 
   async function heandleAdd() {
@@ -186,7 +209,8 @@ function App() {
 
       {user && (
         <div>
-          <strong>Seja bem vindo(a)!! (Você está logado!)</strong><br/>
+          <strong>Seja bem vindo(a)!! (Você está logado!)</strong>
+          <br />
           <span>
             ID: {userDetail.uid} - Email: {userDetail.email}
           </span>
