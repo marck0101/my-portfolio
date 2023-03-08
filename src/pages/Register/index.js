@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../firebaseConnection"; // pra conectar com o firebase
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { toast } from "react-toastify";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -14,21 +15,20 @@ export default function Register() {
     if (email !== "" && password !== "") {
       await createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
-          alert("sucesso ao Registrar");
-
+          // alert("sucesso ao Registrar");
           navigate("/admin", { replace: true });
         })
         .cach(() => {
-          alert("erro ao fazer cadastro");
+          toast.error("Erro ao Fazer Cadastro");
         });
     } else {
-      alert("algum campo vazio");
+      toast.error("Algum Campo Vazio");
     }
   }
 
   return (
     <div className="home-container">
-      <h1>cadastre-se</h1>
+      <h1>Cadastre-se</h1>
       <span>Vamos criar sua conta.</span>
 
       <form className="form" onSubmit={headleRegister}>
@@ -47,7 +47,7 @@ export default function Register() {
         />
         <button type="submit">Cadastrar</button>
         <Link className="button-link" to="/">
-          Já possui uma conta? Faça login!
+          Já possui uma conta? <b style={{ color: "#3366ff" }}>Faça login!</b>
         </Link>
       </form>
     </div>

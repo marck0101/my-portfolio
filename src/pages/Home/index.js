@@ -5,6 +5,8 @@ import { auth } from "../../firebaseConnection"; // pra conectar com o firebase
 import { signInWithEmailAndPassword } from "firebase/auth";
 import "./home.css";
 
+import { toast } from "react-toastify";
+
 export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,16 +18,22 @@ export default function Home() {
       await signInWithEmailAndPassword(auth, email, password) // auth para conectar, email e senha para registrar
         .then(() => {
           // navegar para / admin
-          alert("sucesso ao Acessar");
+          // alert("sucesso ao Acessar");
           navigate("/admin", { replace: true }); // aqui vai dar replace no histórico de navegação
         })
         .cach(() => {
-          alert("Erro ao acessar");
+          toast.error("Erro ao Acessar");
         });
     } else {
-      alert("algum campo vazio");
+      toast.error("Algum Campo Vazio");
     }
   }
+
+  // function teste() {
+  //   toast.success("success");
+  //   toast.error("error");
+
+  // }
 
   return (
     <div className="home-container">
@@ -48,9 +56,10 @@ export default function Home() {
         />
         <button type="submit">Acessar</button>
         <Link className="button-link" to="/register">
-          Não possui uma conta? Cadastre-se!
+          Não possui uma conta? <b style={{ color: "#3366ff" }}>Cadastre-se!</b>
         </Link>
       </form>
+      {/* <button onClick={teste}>teste</button> */}
     </div>
   );
 }

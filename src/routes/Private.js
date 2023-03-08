@@ -19,6 +19,7 @@ export default function Private({ children }) {
           setLoading(false);
           setSigned(true);
         } else {
+          //nao possui user logado
           setLoading(false);
           setSigned(false);
         }
