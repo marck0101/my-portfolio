@@ -7,7 +7,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <ToastContainer autoClose={3000} />
-      <RoutesApp />
+     <RoutesApp />
     </BrowserRouter>
   );
 }
