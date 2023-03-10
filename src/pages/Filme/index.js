@@ -13,11 +13,10 @@ function Filme() {
 
   useEffect(() => {
     async function loadFilme() {
-      await api
-        .get(`/movie/${id}`, {
+      await api.get(`/movie/${id}`, {
           // espera a requisiçao, pega o fillme de tal 'id'
           params: {
-            api_key: "cc11476b835ab07d6e712d9d4d7ae788", // passa a nossa  chave de acesso a API
+            api_key: "ac9e5e514ef9fdf5c60f3e541419fba0", // passa a nossa  chave de acesso a API
             language: "pt-BR", // e trazer resulltados na lilngua portuguesa
           },
         })
