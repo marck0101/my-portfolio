@@ -1,47 +1,68 @@
-# Getting Started with Create React App
+# Portfólio em Desenvolvimento
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ ## Projetos de aprendizagem
+ - Clean code
+ - Lógica
+ - Estrutura de pastas de projetos
+ - Conceitos Básicos a avançados de programação
+ - TypeScript
+ - JavaScript
+    - Manipulação de DOM
+    - Array
+    - Map e ForEach
+    - Sprad
+ - React
+   - Hooks
+   - Redux
+ - NodeJs
+   - POO
+   - Core Modules
+   - NPM
+   - EXPRESS
+   -MVC
+   - Get A Pet
+ - Java
+    - POO
+    - Java para Web
 
-## Available Scripts
+<br>
 
-In the project directory, you can run:
 
-### `npm start`
+#  Projetos publicados
+ ## Next Movies
+ -[x]  Em desenvolvimento
+ - Lista de filmes em cartaz, você pode encontrá-lo [aqui](https://filmes-lancamentos-atualizados.netlify.app)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+ Nesse projeto foi usados uma API externa para listar filmes em cartaz.
+ Foi usado vários conceitos dos Hooks do ReactJs.
+<br>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+ ## Lista de Tarefas
+ -[x]  Finalizado
+ - Lista de tarefas, você pode encontrá-lo [Aqui](https://atual-lista-tarefas.netlify.app)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Nesse projeto foi trabalhado com LocalStorage e com o Firebase. Trabalhado a questão de login de sessão e logout de sessão.
 
-### `npm run build`
+Os usuários não terão acesso as notas de outros usuários.
+<br>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Sistema de chamados
+  -[x] Finalizado
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+ Sistema de chamados, você pode encontrálo [aqui](https://called-system.netlify.app)
 
-### `npm run eject`
+ <!-- Nesse projeto foram usados várias tecnologias exenciais para se trabalhar com React,sendo algumas delas:
+ - ContextAPI
+ - UseState
+ - UseEffect
+ - Auth
+ - Conexão com banco externo, o Firebase -->
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+A proposta desse projeto é criar um sistema de chamado simples, sendo possível:
+ - Cadastrar de usuários
+ - Fazer a abertura de chamado, verificar andamento e encerramento dos chamados
+ - Trabalhar com login e logout do sistema
+ - Manter a sessão conectada quando usuário acessar
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-"# my-portfolio" 
