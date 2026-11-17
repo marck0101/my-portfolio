@@ -3,6 +3,11 @@
   command = "npm run build"
   publish = "build"
 
+# Node 18+ é necessário: scripts/pos-build.js usa o fetch nativo para buscar
+# os filmes do TMDB (sitemap.xml e llms.txt). Sites antigos ficam no Node 16.
+[build.environment]
+  NODE_VERSION = "20"
+
 # SPA: qualquer rota cai no index.html (mesmo papel do public/_redirects)
 [[redirects]]
   from = "/*"
