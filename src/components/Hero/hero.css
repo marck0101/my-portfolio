@@ -1,0 +1,116 @@
+.hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(460px, 78vh, 760px);
+  padding: 96px 0 clamp(2rem, 6vh, 4rem);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero--vazio {
+  border-radius: 0;
+}
+
+.hero__fundo {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  animation: hero-entra 900ms ease-out both;
+}
+
+@keyframes hero-entra {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero__veu {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top, var(--fundo) 0%, rgba(13, 16, 21, 0.55) 40%, rgba(13, 16, 21, 0.1) 70%),
+    linear-gradient(to right, rgba(13, 16, 21, 0.92) 0%, rgba(13, 16, 21, 0.45) 45%, transparent 75%);
+}
+
+.hero__conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  width: 100%;
+  max-width: calc(680px + 2 * var(--gutter));
+}
+
+.hero__rotulo {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--destaque-hover);
+}
+
+.hero__titulo {
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  font-size: clamp(2rem, 6vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
+}
+
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.9rem;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+
+.hero__nota {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--texto);
+}
+
+.hero__nota svg {
+  color: var(--estrela);
+}
+
+.hero__sinopse {
+  max-width: 60ch;
+  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+  line-height: 1.6;
+  color: var(--texto-suave);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.6);
+}
+
+.hero__direcao {
+  font-size: 0.9rem;
+  color: var(--texto);
+}
+
+.hero__direcao span {
+  color: var(--texto-nota);
+}
+
+.hero__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.4rem;
+}

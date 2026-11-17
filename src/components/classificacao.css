@@ -1,0 +1,41 @@
+.classificacao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.45em;
+  height: 1.45em;
+  padding: 0 0.2em;
+  border-radius: 3px;
+  font-family: var(--fonte-texto);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  background: #555;
+  vertical-align: middle;
+}
+
+.classificacao--grande {
+  font-size: 0.85rem;
+}
+
+.classificacao--L {
+  background: #0c9447;
+}
+.classificacao--10 {
+  background: #0f7dc2;
+}
+.classificacao--12 {
+  background: #f8c411;
+  color: #111;
+}
+.classificacao--14 {
+  background: #e67824;
+}
+.classificacao--16 {
+  background: #db2827;
+}
+.classificacao--18 {
+  background: #1d1815;
+  box-shadow: inset 0 0 0 1px #555;
+}

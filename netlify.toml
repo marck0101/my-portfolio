@@ -1,0 +1,10 @@
+# O Netlify gera o build a cada push na main (a pasta build/ não vai para o git)
+[build]
+  command = "npm run build"
+  publish = "build"
+
+# SPA: qualquer rota cai no index.html (mesmo papel do public/_redirects)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

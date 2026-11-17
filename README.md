@@ -1,68 +1,81 @@
-# Portfólio em Desenvolvimento
+# Next Movies
 
- ## Projetos de aprendizagem
- - Clean code
- - Lógica
- - Estrutura de pastas de projetos
- - Conceitos Básicos a avançados de programação
- - TypeScript
- - JavaScript
-    - Manipulação de DOM
-    - Array
-    - Map e ForEach
-    - Sprad
- - React
-   - Hooks
-   - Redux
- - NodeJs
-   - POO
-   - Core Modules
-   - NPM
-   - EXPRESS
-   -MVC
-   - Get A Pet
- - Java
-    - POO
-    - Java para Web
+Catálogo de filmes no estilo dos serviços de streaming, feito em React com dados do [TMDB](https://www.themoviedb.org/).
 
-<br>
+**No ar:** https://filmes-lancamentos-atualizados.netlify.app
 
+## O que faz
 
-#  Projetos publicados
- ## Next Movies
- -[x]  Em desenvolvimento
- - Lista de filmes em cartaz, você pode encontrá-lo [aqui](https://filmes-lancamentos-atualizados.netlify.app)
+- **Catálogo filtrável por período.** Atalhos (Em cartaz, Em breve, ano atual, ano passado, Anos 2010, 2000 e 90) ou datas livres de/até. Também filtra por gênero e ordena por popularidade, data ou nota.
+- **Filtro na URL.** `/?de=1990-01-01&ate=1999-12-31&genero=18&ordem=vote_average.desc` abre o catálogo já filtrado. Dá para compartilhar o link e o botão voltar funciona.
+- **Capas com informação.** Nota, ano, duração, classificação indicativa brasileira (selos do ClassInd) e direção. No hover (mouse), a sinopse e os gêneros sobem sobre o pôster.
+- **Destaque do período.** O filme mais relevante do filtro atual aparece em tela cheia no topo.
+- **Página do filme.** Fundo em tela cheia, ficha técnica (direção, roteiro, música, estreia no Brasil e mundial, idioma, produção, orçamento, bilheteria), onde assistir no Brasil, elenco, trailer e títulos semelhantes.
+- **Minha lista.** Filmes salvos no navegador (localStorage), sem login.
+- **Responsivo e fluido.** A grade ajusta o número de colunas à tela, tem rolagem infinita e esqueletos de carregamento. Os dados extras de cada capa só são pedidos quando ela aparece na tela.
 
- Nesse projeto foi usados uma API externa para listar filmes em cartaz.
- Foi usado vários conceitos dos Hooks do ReactJs.
-<br>
+## Rodar localmente
 
+Requer Node 18 ou mais novo.
 
- ## Lista de Tarefas
- -[x]  Finalizado
- - Lista de tarefas, você pode encontrá-lo [Aqui](https://atual-lista-tarefas.netlify.app)
+```bash
+npm install
+npm start          # http://localhost:3000
+npm run build      # gera build/ (é o que o Netlify publica)
+```
 
-Nesse projeto foi trabalhado com LocalStorage e com o Firebase. Trabalhado a questão de login de sessão e logout de sessão.
+A chave da API do TMDB já vem com um valor padrão em `src/services/tmdb.js`. Para usar outra, crie um `.env.local`:
 
-Os usuários não terão acesso as notas de outros usuários.
-<br>
+```
+REACT_APP_TMDB_KEY=sua_chave_v3
+```
 
+> A chave v3 do TMDB fica visível no navegador em qualquer site estático. Ela é de leitura e tem limite de uso, então não é um segredo. Mesmo assim, não reutilize uma chave com outras permissões.
 
-## Sistema de chamados
-  -[x] Finalizado
+## Estrutura
 
- Sistema de chamados, você pode encontrálo [aqui](https://called-system.netlify.app)
+```
+src/
+├── index.js / App.js / routes.js   # entrada, toasts, rotas, header e rodapé
+├── index.css                       # tokens de cor/fonte, botões, esqueleto
+├── services/tmdb.js                # TODAS as chamadas à API + cache dos extras
+├── hooks/
+│   ├── useCatalogo.js              # lista paginada do /discover (filtro → página 1, cancela pedido antigo)
+│   ├── useExtras.js                # duração, direção, classificação de um filme
+│   ├── useEmTela.js                # IntersectionObserver: o card chegou na tela?
+│   └── useMinhaLista.js            # "Minha lista" no localStorage, sincronizada entre abas
+├── utils/
+│   ├── periodos.js                 # atalhos de período e opções de ordem
+│   └── formato.js                  # duração, datas, nota, moeda, idioma em pt-BR
+├── components/
+│   ├── Header, Footer
+│   ├── Hero/                       # destaque do período
+│   ├── Filtros/                    # chips de período, datas, gênero, ordem
+│   ├── Grade/                      # grade fluida + rolagem infinita
+│   ├── MovieCard/                  # a capa do filme
+│   ├── Fileira/                    # fileira horizontal (elenco, semelhantes)
+│   ├── Trailer/                    # <dialog> com o trailer do YouTube
+│   └── Classificacao.js            # selo L/10/12/14/16/18
+└── pages/
+    ├── Home/        → /                 catálogo
+    ├── Filme/       → /filme/:id        detalhes
+    ├── Favoritos/   → /minha-lista      (e /favoritos, endereço antigo)
+    └── Erro/        → *                 404
+```
 
- <!-- Nesse projeto foram usados várias tecnologias exenciais para se trabalhar com React,sendo algumas delas:
- - ContextAPI
- - UseState
- - UseEffect
- - Auth
- - Conexão com banco externo, o Firebase -->
+## Endpoints do TMDB usados
 
-A proposta desse projeto é criar um sistema de chamado simples, sendo possível:
- - Cadastrar de usuários
- - Fazer a abertura de chamado, verificar andamento e encerramento dos chamados
- - Trabalhar com login e logout do sistema
- - Manter a sessão conectada quando usuário acessar
+| Uso | Endpoint |
+|---|---|
+| Catálogo | `GET /discover/movie` com `primary_release_date.gte/lte`, `with_genres`, `sort_by`, `page` |
+| Gêneros do filtro | `GET /genre/movie/list` |
+| Extras da capa | `GET /movie/{id}?append_to_response=credits,release_dates` |
+| Página do filme | `GET /movie/{id}?append_to_response=credits,videos,release_dates,watch/providers,recommendations` |
 
+Tudo em `language=pt-BR`. Imagens em `image.tmdb.org/t/p/{tamanho}`.
+
+## Créditos
+
+Dados e imagens: TMDB. Este produto usa a API do TMDB, mas não é endossado nem certificado pelo TMDB. Dados de "onde assistir": JustWatch, via TMDB.
+
+Feito por [Marcos Henrique Corrêa](https://marck0101.com.br).

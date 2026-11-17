@@ -1,0 +1,12 @@
+/* Colunas se ajustam à largura: 2 no celular pequeno, até 7-8 em telas grandes */
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(clamp(140px, 30vw, 190px), 1fr));
+  gap: clamp(1.25rem, 3vw, 2rem) clamp(0.75rem, 2vw, 1.25rem);
+}
+
+.grade__mais {
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 0 1rem;
+}

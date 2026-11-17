@@ -1,0 +1,85 @@
+.fileira {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.fileira__titulo {
+  font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+  font-weight: 600;
+}
+
+.fileira__moldura {
+  position: relative;
+}
+
+.fileira__trilho {
+  display: grid;
+  grid-auto-flow: column;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 0.5rem var(--gutter) 1rem;
+  scroll-padding-inline: var(--gutter);
+}
+
+.fileira__trilho::-webkit-scrollbar {
+  display: none;
+}
+
+.fileira__trilho > * {
+  scroll-snap-align: start;
+}
+
+.fileira__trilho--item {
+  grid-auto-columns: clamp(130px, 38vw, 180px);
+}
+
+.fileira__trilho--pessoa {
+  grid-auto-columns: clamp(110px, 28vw, 140px);
+}
+
+.fileira__seta {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .fileira__seta {
+    position: absolute;
+    top: 0;
+    bottom: 1rem;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    width: var(--gutter);
+    min-width: 40px;
+    border: 0;
+    background: rgba(13, 16, 21, 0.7);
+    color: var(--texto);
+    font-size: 1.1rem;
+    opacity: 0;
+    transition: opacity var(--transicao), background-color var(--transicao);
+  }
+
+  .fileira__seta--esq {
+    left: 0;
+  }
+
+  .fileira__seta--dir {
+    right: 0;
+  }
+
+  .fileira__moldura:hover .fileira__seta:not(:disabled) {
+    opacity: 1;
+  }
+
+  .fileira__seta:hover {
+    background: rgba(13, 16, 21, 0.9);
+  }
+
+  .fileira__seta:disabled {
+    pointer-events: none;
+  }
+}

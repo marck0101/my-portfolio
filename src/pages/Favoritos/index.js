@@ -1,51 +1,38 @@
-import { useEffect, useState } from 'react';
-import './favoritos.css';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify'
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import Grade from "../../components/Grade";
+import useMinhaLista from "../../hooks/useMinhaLista";
+import "./favoritos.css";
 
-function Favoritos(){
-  const [filmes, setFilmes] = useState([])
+// Minha lista: filmes salvos neste navegador (localStorage)
+function Favoritos() {
+  const { lista } = useMinhaLista();
 
-  useEffect(()=>{
+  useEffect(() => {
+    document.title = "Minha lista · Next Movies";
+  }, []);
 
-    const minhaLista = localStorage.getItem("@primeflix");
-    setFilmes(JSON.parse(minhaLista) || [])
+  return (
+    <main className="lista conteudo">
+      <header className="lista__cabecalho">
+        <h1>Minha lista</h1>
+        <p className="mono">
+          {lista.length} {lista.length === 1 ? "filme salvo" : "filmes salvos"} neste navegador
+        </p>
+      </header>
 
-  }, [])
-
-
-  function excluirFilme(id){
-    let filtroFilmes = filmes.filter( (item) => {
-      return (item.id !== id)
-    })
-
-    setFilmes(filtroFilmes);
-    localStorage.setItem("@primeflix", JSON.stringify(filtroFilmes) )
-    toast.success("Filme removido com sucesso")
-  }
-
-  return(
-    <div className="meus-filmes">
-      <h1>Meus filmes</h1>
-
-      {filmes.length === 0 && <span>Você não possui nenhum filme salvo :( </span>}
-
-      <ul>
-        {filmes.map((item) => {
-          return(
-            <li key={item.id}>
-              <span>{item.title}</span>
-
-              <div>
-                <Link to={`/filme/${item.id}`}>Ver detalhes</Link>
-                <button onClick={() => excluirFilme(item.id) }>Excluir</button>
-              </div>
-            </li>
-          )
-        })}
-      </ul>
-    </div>
-  )
+      {lista.length === 0 ? (
+        <div className="lista__vazia">
+          <p>Sua lista está vazia. Use o botão + na capa de um filme para guardar e ver depois.</p>
+          <Link to="/" className="btn btn--destaque">
+            Explorar o catálogo
+          </Link>
+        </div>
+      ) : (
+        <Grade filmes={lista} carregando={false} temMais={false} />
+      )}
+    </main>
+  );
 }
 
 export default Favoritos;
