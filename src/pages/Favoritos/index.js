@@ -1,16 +1,20 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Grade from "../../components/Grade";
 import useMinhaLista from "../../hooks/useMinhaLista";
+import useSeo from "../../hooks/useSeo";
 import "./favoritos.css";
 
 // Minha lista: filmes salvos neste navegador (localStorage)
 function Favoritos() {
   const { lista } = useMinhaLista();
 
-  useEffect(() => {
-    document.title = "Minha lista · Next Movies";
-  }, []);
+  // Lista pessoal (localStorage): fora do índice dos buscadores
+  useSeo({
+    titulo: "Minha lista · Next Movies",
+    descricao: "Filmes que você salvou neste navegador para ver depois.",
+    caminho: "/minha-lista",
+    indexar: false,
+  });
 
   return (
     <main className="lista conteudo">

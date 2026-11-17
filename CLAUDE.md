@@ -56,6 +56,13 @@ O nome do repositório (`my-portfolio`) é histórico. O app é o **Next Movies*
 - Classificação indicativa nas cores oficiais do ClassInd (`components/classificacao.css`).
 - `prefers-reduced-motion` desliga animações.
 
+## 5b. SEO e GEO
+
+- `useSeo` (src/hooks/useSeo.js) em toda página. Catálogo: canonical `/` na vista padrão, senão a URL com filtros. Filme: `/filme/:id` + JSON-LD `Movie`.
+- **Nunca** marcar a nota do TMDB como `aggregateRating`: o Google proíbe avaliações vindas de outro site (risco de ação manual). A nota aparece na tela, só não vai para o JSON-LD.
+- `scripts/pos-build.js` roda no `npm run build` e gera `build/sitemap.xml` e `build/llms.txt` com dados do TMDB do momento do build. Lista de filmes do sitemap só se atualiza a cada deploy.
+- `public/og-image.png` (1200x630): print do catálogo, imagem padrão de compartilhamento.
+
 ## 6. Deploy
 
 | Campo | Valor |
@@ -78,3 +85,4 @@ Confirmar no painel do Netlify se o deploy é automático no push da `main` ante
 |---|---|
 | 2023-03 | Versão inicial: 10 filmes de `/movie/upcoming` em coluna única, detalhe simples, favoritos |
 | 2026-11-16 | Reescrita como catálogo estilo streaming: filtro de período/gênero/ordem na URL, capas com duração, direção e classificação, destaque, rolagem infinita, página do filme com ficha técnica, onde assistir, elenco, trailer e semelhantes. axios → fetch; MUI, emotion, uuid e `yarn.lock` removidos; README e CLAUDE.md escritos |
+| 2026-11-17 | SEO/GEO: useSeo por página, JSON-LD Movie/WebApplication, noscript descritivo, og-image, robots.txt com bots de IA, sitemap.xml e llms.txt gerados no build |

@@ -1,11 +1,13 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import useSeo from "../../hooks/useSeo";
 import "./erro.css";
 
 function Erro() {
-  useEffect(() => {
-    document.title = "Página não encontrada · Next Movies";
-  }, []);
+  useSeo({
+    titulo: "Página não encontrada · Next Movies",
+    descricao: "O endereço não existe ou o filme saiu do catálogo.",
+    indexar: false,
+  });
 
   return (
     <main className="erro conteudo">

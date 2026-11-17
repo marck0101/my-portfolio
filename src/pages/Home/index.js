@@ -1,11 +1,20 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import Hero from "../../components/Hero";
 import Filtros from "../../components/Filtros";
 import Grade from "../../components/Grade";
 import useCatalogo from "../../hooks/useCatalogo";
+import useSeo from "../../hooks/useSeo";
 import { PERIODO_PADRAO, periodos as criarPeriodos } from "../../utils/periodos";
 import "./home.css";
+
+const FRASE_PERIODO = {
+  "em-cartaz": "em cartaz",
+  "em-breve": "que estreiam em breve",
+  "anos-2010": "dos anos 2010",
+  "anos-2000": "dos anos 2000",
+  "anos-90": "dos anos 90",
+};
 
 function dataCurta(d) {
   return d ? d.split("-").reverse().join("/") : "…";
@@ -53,9 +62,15 @@ function Home() {
     ? periodos.find((p) => p.id === periodoAtivo).label
     : `${dataCurta(filtros.de)} a ${dataCurta(filtros.ate)}`;
 
-  useEffect(() => {
-    document.title = `${rotuloPeriodo} · Next Movies`;
-  }, [rotuloPeriodo]);
+  // SEO do catálogo: a vista padrão é a home; período/gênero escolhidos têm
+  // URL própria (canonical = a própria URL com os filtros)
+  const padraoAtivo = periodoAtivo === PERIODO_PADRAO && !filtros.genero && filtros.ordem === "popularity.desc";
+  const recorte = periodoAtivo ? FRASE_PERIODO[periodoAtivo] || `de ${rotuloPeriodo}` : `lançados de ${rotuloPeriodo}`;
+  useSeo({
+    titulo: padraoAtivo ? "Next Movies · filmes em cartaz e catálogo por período" : `Filmes ${recorte} · Next Movies`,
+    descricao: `Catálogo de filmes ${recorte}: nota, duração, direção, classificação indicativa, trailer e onde assistir no Brasil. Filtre por período, gênero e nota.`,
+    caminho: padraoAtivo ? "/" : `/?${params.toString()}`,
+  });
 
   const destaque = filmes.find((f) => f.backdrop_path) || null;
 

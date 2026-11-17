@@ -1,3 +1,27 @@
-# https://www.robotstxt.org/robotstxt.html
+# Buscadores e assistentes de IA liberados. Resumo do site para IAs: /llms.txt
 User-agent: *
-Disallow:
+Allow: /
+# Lista pessoal salva no navegador de cada visitante: não tem por que indexar
+Disallow: /minha-lista
+Disallow: /favoritos
+
+User-agent: GPTBot
+Allow: /
+Disallow: /minha-lista
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /minha-lista
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /minha-lista
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /minha-lista
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://filmes-lancamentos-atualizados.netlify.app/sitemap.xml

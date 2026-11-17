@@ -63,6 +63,13 @@ src/
     └── Erro/        → *                 404
 ```
 
+## SEO e GEO
+
+- **Por página, no navegador** (`src/hooks/useSeo.js`): título, descrição, canonical, Open Graph e robots. Página de filme com JSON-LD `Movie` (direção, elenco, duração, classificação, trailer). "Minha lista" e 404 com `noindex`.
+- **HTML base** (`public/index.html`): valores padrão, JSON-LD `WebSite` + `WebApplication` ligado ao autor (mesma identidade do marck0101.com.br) e texto no `<noscript>` para quem não executa JavaScript.
+- **No build** (`scripts/pos-build.js`): `sitemap.xml` (início, atalhos de período e os filmes em cartaz e em breve no momento do build) e `llms.txt` (resumo para assistentes de IA). Se o TMDB falhar, gera só com as páginas fixas.
+- `public/robots.txt`: libera buscadores e bots de IA, aponta o sitemap e tira `/minha-lista` do índice.
+
 ## Endpoints do TMDB usados
 
 | Uso | Endpoint |

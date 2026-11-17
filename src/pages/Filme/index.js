@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FaArrowLeft, FaCheck, FaPlay, FaPlus, FaStar, FaUser } from "react-icons/fa";
@@ -12,6 +12,7 @@ import {
 } from "../../services/tmdb";
 import { ano, dataLonga, dolares, duracao, idioma, nota, numero } from "../../utils/formato";
 import useMinhaLista from "../../hooks/useMinhaLista";
+import useSeo, { resumir, SITE } from "../../hooks/useSeo";
 import Classificacao from "../../components/Classificacao";
 import Fileira from "../../components/Fileira";
 import MovieCard from "../../components/MovieCard";
@@ -25,6 +26,62 @@ const TIPOS_ONDE = [
   { chave: "rent", rotulo: "Alugar" },
   { chave: "buy", rotulo: "Comprar" },
 ];
+
+// Título, descrição e JSON-LD Movie da página do filme. A nota do TMDB NÃO vai
+// como aggregateRating: o Google proíbe marcar avaliações vindas de outro site.
+function dadosSeo(f) {
+  const crew = f.credits?.crew || [];
+  const direcao = [...new Set(crew.filter((p) => p.job === "Director").map((p) => p.name))];
+  const generos = (f.genres || []).map((g) => g.name);
+  const classificacao = classificacaoBR(f.release_dates);
+  const trailer = escolherTrailer(f.videos);
+  const url = `${SITE}/filme/${f.id}`;
+  const anoFilme = ano(f.release_date);
+
+  const partes = [duracao(f.runtime), generos.slice(0, 2).join(" e "), direcao.length ? `direção de ${direcao[0]}` : null]
+    .filter(Boolean)
+    .join(", ");
+  const titulo = `${f.title}${anoFilme ? ` (${anoFilme})` : ""} · Next Movies`;
+  const descricao = resumir(`${f.title}${anoFilme ? ` (${anoFilme})` : ""}${partes ? `: ${partes}.` : "."} ${f.overview || ""}`);
+
+  const jsonld = JSON.parse(
+    JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Movie",
+      "@id": `${url}#filme`,
+      url,
+      name: f.title,
+      alternateName: f.original_title !== f.title ? f.original_title : undefined,
+      description: f.overview || undefined,
+      image: f.poster_path ? imagem(f.poster_path, "w500") : undefined,
+      datePublished: f.release_date || undefined,
+      genre: generos.length ? generos : undefined,
+      duration: f.runtime ? `PT${Math.floor(f.runtime / 60)}H${f.runtime % 60}M` : undefined,
+      inLanguage: f.original_language || undefined,
+      contentRating: classificacao ? `ClassInd ${classificacao}` : undefined,
+      director: direcao.length ? direcao.map((name) => ({ "@type": "Person", name })) : undefined,
+      actor: (f.credits?.cast || []).slice(0, 8).map((p) => ({ "@type": "Person", name: p.name })),
+      productionCompany: (f.production_companies || []).slice(0, 3).map((c) => ({ "@type": "Organization", name: c.name })),
+      trailer: trailer
+        ? {
+            "@type": "VideoObject",
+            name: trailer.name,
+            embedUrl: `https://www.youtube-nocookie.com/embed/${trailer.key}`,
+            thumbnailUrl: `https://i.ytimg.com/vi/${trailer.key}/hqdefault.jpg`,
+            uploadDate: (trailer.published_at || f.release_date || "").slice(0, 10) || undefined,
+          }
+        : undefined,
+      sameAs: `https://www.themoviedb.org/movie/${f.id}`,
+    })
+  );
+
+  return {
+    titulo,
+    descricao,
+    imagem: f.backdrop_path ? imagem(f.backdrop_path, "w780") : f.poster_path ? imagem(f.poster_path, "w500") : undefined,
+    jsonld,
+  };
+}
 
 function nomesPorFuncao(crew, funcoes) {
   const nomes = crew.filter((p) => funcoes.includes(p.job)).map((p) => p.name);
@@ -55,9 +112,14 @@ function Filme() {
     return () => ctrl.abort();
   }, [id, navigate]);
 
-  useEffect(() => {
-    if (filme) document.title = `${filme.title} (${ano(filme.release_date) || "s/d"}) · Next Movies`;
-  }, [filme]);
+  const seo = useMemo(() => (filme ? dadosSeo(filme) : null), [filme]);
+  useSeo({
+    titulo: seo?.titulo,
+    descricao: seo?.descricao,
+    caminho: filme ? `/filme/${filme.id}` : undefined,
+    imagem: seo?.imagem,
+    jsonld: seo?.jsonld,
+  });
 
   if (erro) {
     return (

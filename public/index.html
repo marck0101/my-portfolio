@@ -4,13 +4,78 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#0d1015" />
+
+    <!-- SEO padrão (vale para quem não executa JS). Cada página troca estes
+         valores no navegador: src/hooks/useSeo.js -->
+    <title>Next Movies · filmes em cartaz e catálogo por período</title>
     <meta
       name="description"
-      content="Next Movies: catálogo de filmes com filtro por período de lançamento, gênero e nota. Duração, direção, classificação, elenco, trailer e onde assistir no Brasil."
+      content="Next Movies: catálogo de filmes com filtro por período de lançamento, gênero e nota. Duração, direção, classificação indicativa, elenco, trailer e onde assistir no Brasil."
     />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Marcos Henrique Corrêa" />
+    <link rel="canonical" href="https://filmes-lancamentos-atualizados.netlify.app/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Next Movies" />
+    <meta property="og:url" content="https://filmes-lancamentos-atualizados.netlify.app/" />
+    <meta property="og:title" content="Next Movies · filmes em cartaz e catálogo por período" />
+    <meta
+      property="og:description"
+      content="Catálogo de filmes com filtro por período, gênero e nota. Duração, direção, classificação, trailer e onde assistir no Brasil."
+    />
+    <meta property="og:image" content="https://filmes-lancamentos-atualizados.netlify.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Next Movies · filmes em cartaz e catálogo por período" />
+    <meta
+      name="twitter:description"
+      content="Catálogo de filmes com filtro por período, gênero e nota. Duração, direção, classificação, trailer e onde assistir no Brasil."
+    />
+    <meta name="twitter:image" content="https://filmes-lancamentos-atualizados.netlify.app/og-image.png" />
+
     <link rel="icon" href="%PUBLIC_URL%/cadeira.png" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/cadeira.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- O app e quem fez (mesma identidade @id do marck0101.com.br) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://filmes-lancamentos-atualizados.netlify.app/#site",
+            "url": "https://filmes-lancamentos-atualizados.netlify.app/",
+            "name": "Next Movies",
+            "inLanguage": "pt-BR",
+            "creator": { "@id": "https://marck0101.com.br/#person" }
+          },
+          {
+            "@type": "WebApplication",
+            "@id": "https://filmes-lancamentos-atualizados.netlify.app/#app",
+            "name": "Next Movies",
+            "url": "https://filmes-lancamentos-atualizados.netlify.app/",
+            "description": "Catálogo de filmes com filtro por período de lançamento, gênero e nota. Mostra duração, direção, classificação indicativa brasileira, elenco, trailer e onde assistir no Brasil. Dados do TMDB.",
+            "applicationCategory": "EntertainmentApplication",
+            "operatingSystem": "Web",
+            "inLanguage": "pt-BR",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
+            "creator": { "@id": "https://marck0101.com.br/#person" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://marck0101.com.br/#person",
+            "name": "Marcos Henrique Corrêa",
+            "url": "https://marck0101.com.br/",
+            "sameAs": ["https://github.com/marck0101", "https://blog.marck0101.com.br"]
+          }
+        ]
+      }
+    </script>
 
     <!-- Imagens e dados vêm do TMDB: conectar cedo economiza a primeira ida e volta -->
     <link rel="preconnect" href="https://api.themoviedb.org" />
@@ -25,11 +90,26 @@
       media="print"
       onload="this.media='all'"
     />
-
-    <title>Next Movies · catálogo de filmes</title>
   </head>
   <body>
-    <noscript>Ative o JavaScript para ver o catálogo de filmes.</noscript>
+    <noscript>
+      <h1>Next Movies: filmes em cartaz e catálogo por período</h1>
+      <p>
+        Catálogo de filmes com dados do TMDB. Filtre por período de lançamento (em cartaz, em breve, por ano ou
+        por década), por gênero e por nota. Cada filme mostra duração, direção, classificação indicativa
+        brasileira, elenco, trailer e onde assistir no Brasil.
+      </p>
+      <p>
+        Filtros pela URL: <code>/?de=AAAA-MM-DD&amp;ate=AAAA-MM-DD&amp;genero=ID&amp;ordem=popularity.desc</code>.
+        Página de cada filme: <code>/filme/ID-DO-TMDB</code>. Resumo para assistentes de IA:
+        <a href="/llms.txt">/llms.txt</a>.
+      </p>
+      <p>
+        Feito por <a href="https://marck0101.com.br">Marcos Henrique Corrêa</a>. Este produto usa a API do TMDB,
+        mas não é endossado nem certificado pelo TMDB.
+      </p>
+      <p>Ative o JavaScript para usar o catálogo.</p>
+    </noscript>
     <div id="root"></div>
   </body>
 </html>
